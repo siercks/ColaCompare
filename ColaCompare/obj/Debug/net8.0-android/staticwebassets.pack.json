@@ -1,0 +1,45 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\siercks\\Documents\\GitHub\\ColaCompare\\ColaCompare\\obj\\Debug\\net8.0-android\\scopedcss\\bundle\\ColaCompare.styles.css",
+      "PackagePath": "staticwebassets\\ColaCompare.styles.css"
+    },
+    {
+      "Id": "C:\\Users\\siercks\\Documents\\GitHub\\ColaCompare\\ColaCompare\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\siercks\\Documents\\GitHub\\ColaCompare\\ColaCompare\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\siercks\\Documents\\GitHub\\ColaCompare\\ColaCompare\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\siercks\\Documents\\GitHub\\ColaCompare\\ColaCompare\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "C:\\Users\\siercks\\Documents\\GitHub\\ColaCompare\\ColaCompare\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.ColaCompare.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.build.ColaCompare.props",
+      "PackagePath": "build\\ColaCompare.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.buildMultiTargeting.ColaCompare.props",
+      "PackagePath": "buildMultiTargeting\\ColaCompare.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0-android\\staticwebassets\\msbuild.buildTransitive.ColaCompare.props",
+      "PackagePath": "buildTransitive\\ColaCompare.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

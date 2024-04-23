@@ -1,0 +1,1 @@
+C:\Users\siercks\Documents\GitHub\ColaCompare\ColaCompare\ColaCompare.csproj;x64
