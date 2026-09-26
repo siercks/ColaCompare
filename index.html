@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ColaCompare</title>
+  <meta name="description" content="Compare the cost per ounce of soda six-packs, 12-packs, 2 liters and more. Scan barcodes and find the best deal.">
+  <meta name="theme-color" content="#efe9dd" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#141311" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <header class="masthead wrap">
+    <img class="logo" src="icons/icon.svg" alt="" width="48" height="48">
+    <div class="masthead-text">
+      <h1><span class="wm-cola">Cola</span>Compare</h1>
+      <p class="tagline">Unit-price checker for the soda aisle</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="toolbar" aria-label="Display options">
+      <span class="eyebrow" id="display-label">Compare by</span>
+      <div class="segmented" role="radiogroup" aria-labelledby="display-label" id="display-toggle">
+        <button type="button" role="radio" data-display="oz">¢ / oz</button>
+        <button type="button" role="radio" data-display="can">per 12 oz</button>
+        <button type="button" role="radio" data-display="liter">per liter</button>
+      </div>
+    </section>
+
+    <section aria-label="Products to compare">
+      <ol class="items" id="items"></ol>
+      <button type="button" class="add-tag" id="add-item">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        <span id="add-label">Add a product</span>
+      </button>
+    </section>
+
+    <section class="verdict" id="results" aria-live="polite" aria-labelledby="results-title">
+      <div class="verdict-head">
+        <h2 id="results-title">The verdict</h2>
+        <button type="button" class="text-btn" id="reset">Clear all</button>
+      </div>
+      <div class="receipt-wrap">
+        <div class="receipt" id="results-body"></div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p>Product names and sizes from barcode scans come from <a href="https://world.openfoodfacts.org" target="_blank" rel="noopener">Open Food Facts</a>. Always check the shelf label. Prices you enter stay on this device.</p>
+    </footer>
+  </main>
+
+  <a class="sale-bar" id="winner-bar" href="#results" hidden></a>
+
+  <template id="item-template">
+    <li class="item">
+      <div class="item-body">
+        <div class="item-head">
+          <span class="cap" aria-hidden="true"></span>
+          <label class="sr-only" data-for="name">Product name</label>
+          <input class="name" data-field="name" type="text" autocomplete="off" placeholder="Name this product">
+          <button type="button" class="icon-btn remove" aria-label="Remove product">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+
+        <div class="item-tools">
+          <button type="button" class="btn btn-ink scan">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 8v8M10 8v8M13 8v8M17 8v8"/></svg>
+            Scan
+          </button>
+          <label class="sr-only" data-for="preset">Common sizes</label>
+          <select class="preset" data-field="preset">
+            <option value="">Pick a common size…</option>
+          </select>
+        </div>
+
+        <p class="scan-note" hidden></p>
+
+        <div class="fields">
+          <div class="field field-count">
+            <label data-for="count">Qty</label>
+            <input data-field="count" type="text" inputmode="numeric" autocomplete="off" placeholder="#">
+          </div>
+          <span class="times" aria-hidden="true">×</span>
+          <div class="field field-size">
+            <label data-for="size">Size each</label>
+            <div class="size-row">
+              <input data-field="size" type="text" inputmode="decimal" autocomplete="off" placeholder="0">
+              <select data-field="unit" aria-label="Unit">
+                <option value="floz">fl oz</option>
+                <option value="ml">mL</option>
+                <option value="l">L</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="fields">
+          <div class="field field-price">
+            <label data-for="price">Shelf price</label>
+            <div class="prefix-input">
+              <span aria-hidden="true">$</span>
+              <input data-field="price" type="text" inputmode="decimal" autocomplete="off" placeholder="0.00">
+            </div>
+          </div>
+          <div class="field field-deal">
+            <label data-for="deal" title="For deals like 2 for $7, enter 2">For # packs</label>
+            <input data-field="deal" type="text" inputmode="numeric" autocomplete="off" placeholder="1">
+          </div>
+        </div>
+      </div>
+
+      <div class="unit-strip">
+        <div class="unit-left">
+          <span class="unit-label">Unit price</span>
+          <span class="item-total"></span>
+        </div>
+        <div class="unit-right item-ppo"></div>
+      </div>
+    </li>
+  </template>
+
+  <dialog class="scanner" id="scanner" aria-labelledby="scanner-title">
+    <div class="scanner-top">
+      <h2 id="scanner-title">Scan a barcode</h2>
+      <button type="button" class="icon-btn" id="scanner-close" aria-label="Close scanner">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="viewfinder">
+      <video id="scanner-video" playsinline muted></video>
+      <div class="frame" aria-hidden="true"><span class="laser"></span></div>
+      <button type="button" class="icon-btn torch" id="scanner-torch" aria-label="Toggle flashlight" aria-pressed="false" hidden>
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M9 2h6l-1 7h4l-8 13 2-9H8z"/></svg>
+      </button>
+    </div>
+    <p class="scanner-status" id="scanner-status" role="status">Point the camera at the barcode on the package.</p>
+    <form class="manual" id="manual-form">
+      <label for="manual-code">Or type the barcode number</label>
+      <div class="manual-row">
+        <input id="manual-code" type="text" inputmode="numeric" autocomplete="off" pattern="[0-9 ]{6,14}" placeholder="e.g. 049000028911">
+        <button type="submit" class="btn btn-red">Look up</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

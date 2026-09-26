@@ -1,0 +1,12 @@
+{
+  "name": "colacompare",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Compare the cost per ounce of soda packs and bottles.",
+  "type": "module",
+  "scripts": {
+    "start": "npx --yes http-server -c-1 -p 5173 .",
+    "test": "node --test tests/"
+  },
+  "license": "GPL-3.0"
+}
