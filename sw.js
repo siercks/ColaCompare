@@ -1,12 +1,13 @@
 // Network-first service worker: always tries for fresh files, falls back to the
 // cached copy so the page still opens in a store with poor signal.
-const CACHE = 'colacompare-v2';
+const CACHE = 'colacompare-v3';
 const FONT_CACHE = 'colacompare-fonts-v1';
 const SHELL = [
   './',
   'index.html',
   'css/styles.css',
   'js/app.js',
+  'js/brand.js',
   'js/calc.js',
   'js/lookup.js',
   'js/scanner.js',

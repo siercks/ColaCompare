@@ -94,18 +94,33 @@ a { color: inherit; text-decoration-color: var(--red); text-underline-offset: 2p
 /* ---------- Masthead ---------- */
 
 .masthead {
-  display: flex; align-items: center; gap: 12px;
-  padding-top: calc(18px + env(safe-area-inset-top));
-  padding-bottom: 14px;
+  padding-top: calc(14px + env(safe-area-inset-top));
+  padding-bottom: 12px;
   border-bottom: 5px double var(--ink); /* price-list style double rule */
 }
-.logo { width: 48px; height: 48px; flex: none; }
-h1 {
-  margin: 0; font: 800 2.1rem/0.9 var(--display);
-  text-transform: uppercase; letter-spacing: 0.005em;
+.brand { margin: 0; }
+.brand-can {
+  display: block; width: 100%; max-width: 420px; aspect-ratio: 400 / 120;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none; user-select: none;
+  animation: can-in 0.5s cubic-bezier(.2, 1.3, .4, 1) both;
 }
-.wm-cola { color: var(--red); }
-.tagline { margin: 5px 0 0; font: 500 0.72rem/1.2 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
+.brand-can svg { display: block; width: 100%; height: 100%; overflow: visible; stroke: none; } /* not an outline icon */
+.bc-cond { font-family: var(--display); font-weight: 800; }
+.bc-wide { font-family: var(--body); font-weight: 700; }
+.brand-can.shake { animation: can-shake 0.45s ease-in-out; }
+@keyframes can-in { from { opacity: 0; transform: translateX(-24px) rotate(-4deg); } to { opacity: 1; transform: none; } }
+@keyframes can-shake {
+  0%, 100% { transform: none; }
+  20% { transform: rotate(-3deg) translateX(-3px); }
+  40% { transform: rotate(3deg) translateX(3px); }
+  60% { transform: rotate(-2deg); }
+  80% { transform: rotate(1.5deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-can, .brand-can.shake { animation: none; }
+}
+.tagline { margin: 8px 0 0; font: 500 0.72rem/1.2 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-2); }
 
 /* ---------- Toolbar ---------- */
 
@@ -425,7 +440,6 @@ body.results-visible .sale-bar { opacity: 0; pointer-events: none; transform: tr
 /* ---------- Small phones ---------- */
 
 @media (max-width: 370px) {
-  h1 { font-size: 1.8rem; }
   .field-deal { flex-basis: 80px; }
   .size-row select { flex-basis: 66px; }
   .segmented button { padding: 0 9px; }

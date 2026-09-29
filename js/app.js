@@ -1,6 +1,7 @@
 import { PRESETS, ML_PER_FL_OZ, rankItems, totalOunces, pricePerOunce, toNumber, round } from './calc.js';
 import { lookupBarcode } from './lookup.js';
 import { startScanner, cameraSupported, explainCameraError, preloadDetector } from './scanner.js';
+import { mountBrand } from './brand.js';
 
 const MIN_ITEMS = 2;
 const MAX_ITEMS = 5;
@@ -478,6 +479,7 @@ async function handleCode(code) {
 
 // ---------- Start ----------
 
+mountBrand($('#brand-can'));
 renderDisplayToggle();
 renderItems();
 
